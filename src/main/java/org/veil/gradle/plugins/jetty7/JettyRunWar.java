@@ -18,6 +18,7 @@ package org.veil.gradle.plugins.jetty7;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.veil.gradle.plugins.jetty7.internal.Jetty7PluginServer;
 import org.veil.gradle.plugins.jetty7.internal.JettyPluginServer;
 import org.eclipse.jetty.util.Scanner;
 import org.eclipse.jetty.xml.XmlConfiguration;
@@ -122,6 +123,6 @@ public class JettyRunWar extends AbstractJettyRunTask {
     }
 
     public JettyPluginServer createServer() throws Exception {
-        return new Jetty6PluginServer();
+        return new Jetty7PluginServer();
     }
 }

@@ -47,7 +47,7 @@ public class JettyPlugin implements Plugin<Project> {
         project.getPlugins().apply(WarPlugin.class);
         JettyPluginConvention jettyConvention = new JettyPluginConvention();
         Convention convention = project.getConvention();
-        convention.getPlugins().put("jetty", jettyConvention);
+        convention.getPlugins().put("jetty7", jettyConvention);
 
         configureMappingRules(project, jettyConvention);
         configureJettyRun(project);

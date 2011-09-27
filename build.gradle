@@ -1,14 +1,25 @@
+import org.apache.maven.model.Scm;
+
 apply plugin: 'groovy'
+apply from: "$rootDir/gradle/maven-deployment.gradle"
+
+group = 'org.veil.gradle.plugins'
+projectName = 'jetty7-gradle-plugin'
+version = '1.0-SNAPSHOT'
+jettyVersion = "7.0.2.v20100331"
 
 repositories {
-	mavenRepo name:"ossSonatype", urls: "http://oss.sonatype.org/content/groups/public/"
+	mavenRepo urls: "http://veil.org.ua/nexus/content/groups/public/"
 }
 
 dependencies {
 	compile gradleApi(),
-		"org.eclipse.jetty:jetty-server:7.0.2.v20100331",
-		"org.eclipse.jetty:jetty-webapp:7.0.2.v20100331",
-		"org.eclipse.jetty:jetty-annotations:7.0.2.v20100331",
-		"org.eclipse.jetty:jetty-security:7.0.2.v20100331"
+		"org.eclipse.jetty:jetty-server:${jettyVersion}",
+		"org.eclipse.jetty:jetty-webapp:${jettyVersion}",
+		"org.eclipse.jetty:jetty-annotations:${jettyVersion}",
+		"org.eclipse.jetty:jetty-security:${jettyVersion}"
+	
 	groovy localGroovy()
+	
+	testCompile "junit:junit:4.9"
 }

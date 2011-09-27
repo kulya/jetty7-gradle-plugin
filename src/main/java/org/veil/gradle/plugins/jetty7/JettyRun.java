@@ -34,6 +34,7 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.veil.gradle.plugins.jetty7.internal.Jetty7PluginServer;
 import org.veil.gradle.plugins.jetty7.internal.JettyPluginServer;
 
 import java.io.File;
@@ -354,7 +355,7 @@ public class JettyRun extends AbstractJettyRunTask {
     }
 
     public JettyPluginServer createServer() {
-        return new Jetty6PluginServer();
+        return new Jetty7PluginServer();
     }
 
     @InputFile

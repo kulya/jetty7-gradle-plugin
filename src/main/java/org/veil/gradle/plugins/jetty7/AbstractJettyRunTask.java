@@ -122,11 +122,6 @@ public abstract class AbstractJettyRunTask extends ConventionTask {
     private Connector[] connectors;
 
     /**
-     * List of security realms to set up. Optional.
-     */
-    private UserRealm[] userRealms;
-
-    /**
      * A RequestLog implementation to use for the webapp at runtime. Optional.
      */
     private RequestLog requestLog;
@@ -234,14 +229,6 @@ public abstract class AbstractJettyRunTask extends ConventionTask {
             getServer().configureHandlers();
             configureWebApplication();
             getServer().addWebApplication(webAppConfig);
-
-            // set up security realms
-            Object[] configuredRealms = getUserRealms();
-            for (int i = 0; (configuredRealms != null) && i < configuredRealms.length; i++) {
-                logger.debug(configuredRealms[i].getClass().getName() + ": " + configuredRealms[i].toString());
-            }
-
-            plugin.setUserRealms(configuredRealms);
 
             //do any other configuration required by the
             //particular Jetty version
@@ -509,14 +496,6 @@ public abstract class AbstractJettyRunTask extends ConventionTask {
 
     public void setConnectors(Connector[] connectors) {
         this.connectors = connectors;
-    }
-
-    public UserRealm[] getUserRealms() {
-        return userRealms;
-    }
-
-    public void setUserRealms(UserRealm[] userRealms) {
-        this.userRealms = userRealms;
     }
 
     public RequestLog getRequestLog() {

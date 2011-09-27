@@ -34,10 +34,6 @@ public interface JettyPluginServer extends Proxy {
 
     public Object[] getConnectors();
 
-    public void setUserRealms(Object[] realms) throws Exception;
-
-    public Object[] getUserRealms();
-
     public void configureHandlers() throws Exception;
 
     public void addWebApplication(WebAppContext webapp) throws Exception;
