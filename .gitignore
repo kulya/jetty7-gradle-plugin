@@ -1,4 +1,9 @@
 .project
-.classpath
-.settings
+/.classpath
 .idea
+bin/**
+/.settings/
+
+.classpath
+
+.settings/org.eclipse.jdt.core.prefs
