@@ -10,3 +10,7 @@ bin/**
 build/**
 .gradle
 .project
+/out/
+*.iws
+*.ipr
+*.iml

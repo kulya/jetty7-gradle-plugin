@@ -495,6 +495,17 @@ public abstract class AbstractJettyRunTask extends ConventionTask {
     }
 
     public void setConnectors(Connector[] connectors) {
+//    	Connector[] conns = new Connector[connectors.length];
+//    	for (int i = 0; i < connectors.length; i++) {
+//    		Object o = connectors[i];
+//    		System.out.println(o.getClass());
+//    		System.out.println(this.getClass().getClassLoader());
+//    		System.out.println(o instanceof Connector);
+//    		for (Class clazz : o.getClass().getInterfaces()) {
+//    			System.out.println("\t" + clazz);
+//    		}
+//    		conns[i] = (Connector)o;
+//    	}
         this.connectors = connectors;
     }
 

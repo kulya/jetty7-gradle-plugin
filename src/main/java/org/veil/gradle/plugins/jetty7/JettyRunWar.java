@@ -52,7 +52,7 @@ public class JettyRunWar extends AbstractJettyRunTask {
     }
 
     /* (non-Javadoc)
-    * @see org.mortbay.jetty.plugin.util.AbstractJettyTask#configureScanner()
+    * @see AbstractJettyRunTask#configureScanner
     */
     public void configureScanner() {
         List<File> scanList = new ArrayList<File>();

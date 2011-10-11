@@ -28,6 +28,10 @@ import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.bundling.War;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Properties;
+
+import javax.naming.Context;
 
 /**
  * <p>A {@link Plugin} which extends the {@link WarPlugin} to add tasks which run the web application using an embedded
@@ -36,12 +40,33 @@ import java.io.File;
  * @author Hans Dockter
  */
 public class JettyPlugin implements Plugin<Project> {
-    public static final String JETTY_RUN = "jettyRun";
-    public static final String JETTY_RUN_WAR = "jettyRunWar";
-    public static final String JETTY_STOP = "jettyStop";
+    public static final String JETTY_RUN = "jetty7Run";
+    public static final String JETTY_RUN_WAR = "jetty7RunWar";
+    public static final String JETTY_STOP = "jetty7Stop";
 
     public static final String RELOAD_AUTOMATIC = "automatic";
     public static final String RELOAD_MANUAL = "manual";
+    
+    public JettyPlugin() {
+    	setUpJndiProps();
+    }
+    
+    private void setUpJndiProps() {
+    	if (System.getProperty(Context.INITIAL_CONTEXT_FACTORY) == null) {
+    		Properties jndiJettyProps = loadJettyJndiProperties();
+    		System.setProperty(Context.INITIAL_CONTEXT_FACTORY, jndiJettyProps.getProperty(Context.INITIAL_CONTEXT_FACTORY));
+    	}
+    }
+    
+    private Properties loadJettyJndiProperties() {
+    	Properties props = new Properties();
+    	try {
+    		props.load(this.getClass().getClassLoader().getResourceAsStream("jndi.properties"));
+    	} catch (IOException ioe) {
+    		props = null;
+    	}
+    	return props;
+    }
 
     public void apply(Project project) {
         project.getPlugins().apply(WarPlugin.class);

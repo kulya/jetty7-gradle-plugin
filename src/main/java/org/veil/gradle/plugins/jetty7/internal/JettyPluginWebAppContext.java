@@ -16,15 +16,13 @@
 
 package org.veil.gradle.plugins.jetty7.internal;
 
-import java.io.File;
-import java.util.List;
-
-import org.eclipse.jetty.plus.webapp.EnvConfiguration;
-import org.eclipse.jetty.webapp.Configuration;
-import org.eclipse.jetty.webapp.JettyWebXmlConfiguration;
-import org.eclipse.jetty.webapp.TagLibConfiguration;
+import org.eclipse.jetty.webapp.StandardDescriptorProcessor;
+import org.eclipse.jetty.webapp.WebAppClassLoader;
 import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.webapp.WebInfConfiguration;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -34,18 +32,9 @@ public class JettyPluginWebAppContext extends WebAppContext {
     private List classpathFiles;
     private File jettyEnvXmlFile;
     private File webXmlFile;
-    private WebInfConfiguration webInfConfig = new WebInfConfiguration();
-    private EnvConfiguration envConfig = new EnvConfiguration();
-    private JettyConfiguration mvnConfig = new JettyConfiguration();
-    private JettyWebXmlConfiguration jettyWebConfig = new JettyWebXmlConfiguration();
-    private TagLibConfiguration tagConfig = new TagLibConfiguration();
-    private Configuration[] configs = new Configuration[]{
-            webInfConfig, envConfig, mvnConfig, jettyWebConfig, tagConfig
-    };
 
     public JettyPluginWebAppContext() {
         super();
-        setConfigurations(configs);
     }
 
     public void setClassPathFiles(List classpathFiles) {
@@ -73,39 +62,35 @@ public class JettyPluginWebAppContext extends WebAppContext {
     }
 
     public void configure() {
-        setConfigurations(configs);
-        mvnConfig.setClassPathConfiguration(classpathFiles);
-        mvnConfig.setWebXml(webXmlFile);
         try {
             if (this.jettyEnvXmlFile != null) {
-                envConfig.setJettyEnvXml(this.jettyEnvXmlFile.toURI().toURL());
+                setJettyEnvXmlFile(this.jettyEnvXmlFile);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        /*
-        Configuration[] configurations = getConfigurations();
-        for (int i=0;i<configurations.length; i++)
-        {
-            if (configurations[i] instanceof JettyConfiguration)
-            {
-                ((JettyConfiguration)configurations[i]).setClassPathConfiguration (classpathFiles);
-                ((JettyConfiguration)configurations[i]).setWebXml (webXmlFile);
+
+        try {
+            if (webXmlFile != null) {
+                setDescriptor(webXmlFile.getCanonicalPath());
             }
-            else if (configurations[i] instanceof EnvConfiguration)
-            {
-                try
-                {
-                    if (this.jettyEnvXmlFile != null)
-                        ((EnvConfiguration)configurations[i]).setJettyEnvXml(this.jettyEnvXmlFile.toURL());
-                }
-                catch (Exception e)
-                {
-                    throw new RuntimeException(e);
-                }
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
+    public void preConfigure() throws Exception{
+        super.preConfigure();
+        configureWebAppClasspath();
+        getMetaData().addDescriptorProcessor(new StandardDescriptorProcessor());
+
+    }
+
+    private void configureWebAppClasspath() throws IOException {
+        if (classpathFiles != null && !classpathFiles.isEmpty()) {
+            for (Object file : classpathFiles) {
+                ((WebAppClassLoader)getClassLoader()).addClassPath(((File)file).getCanonicalPath());
             }
         }
-        */
     }
 
     public void doStart() throws Exception {

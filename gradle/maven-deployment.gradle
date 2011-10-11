@@ -1,4 +1,4 @@
-import org.apache.maven.model.Scm;
+//import org.apache.maven.model.Scm;
 
 apply plugin: 'maven'
 
@@ -48,10 +48,10 @@ def customizePom(pom) {
 }
 
 def setUpScm(pom) {
-	Scm scm = new Scm()
-	scm.connection = "scm:git:https://github.com/kulya/jetty7-gradle-plugin.git"
-	scm.developerConnection = "scm:git:https://github.com/kulya/jetty7-gradle-plugin.git"
-	scm.url = "scm:git:https://github.com/kulya/jetty7-gradle-plugin.git"
-	scm.tag = "master"
-	pom.model.scm = scm
+//	Scm scm = new Scm()
+//	scm.connection = "scm:git:https://github.com/kulya/jetty7-gradle-plugin.git"
+//	scm.developerConnection = "scm:git:https://github.com/kulya/jetty7-gradle-plugin.git"
+//	scm.url = "scm:git:https://github.com/kulya/jetty7-gradle-plugin.git"
+//	scm.tag = "master"
+//	pom.model.scm = scm
 }
