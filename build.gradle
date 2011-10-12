@@ -4,7 +4,7 @@ apply from: "$rootDir/gradle/maven-deployment.gradle"
 
 group = 'org.veil.gradle.plugins'
 projectName = 'jetty7-gradle-plugin'
-version = '1.0-SNAPSHOT'
+version = '1.0.7.3.0'
 jettyVersion = "7.3.0.v20110203"
 
 repositories {
@@ -16,8 +16,7 @@ dependencies {
 		"org.eclipse.jetty:jetty-server:${jettyVersion}",
 		"org.eclipse.jetty:jetty-webapp:${jettyVersion}",
 		"org.eclipse.jetty:jetty-annotations:${jettyVersion}",
-		"org.eclipse.jetty:jetty-security:${jettyVersion}",
-        "org.springframework:spring-beans:3.0.5.RELEASE"
+		"org.eclipse.jetty:jetty-security:${jettyVersion}"
 	
 	groovy localGroovy()
 	

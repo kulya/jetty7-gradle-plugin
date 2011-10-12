@@ -45,7 +45,7 @@ public class JettyRunWar extends AbstractJettyRunTask {
         super.configureWebApplication();
 
         getWebAppConfig().setWar(getWebApp().getCanonicalPath());
-        getWebAppConfig().configure();
+//        getWebAppConfig().configure();
     }
 
     public void validateConfiguration() {

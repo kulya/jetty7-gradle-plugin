@@ -61,27 +61,21 @@ public class JettyPluginWebAppContext extends WebAppContext {
         return this.jettyEnvXmlFile;
     }
 
-    public void configure() {
-        try {
-            if (this.jettyEnvXmlFile != null) {
-                setJettyEnvXmlFile(this.jettyEnvXmlFile);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public void configure() throws Exception{
+        if (this.jettyEnvXmlFile != null) {
+            setJettyEnvXmlFile(this.jettyEnvXmlFile);
         }
 
-        try {
-            if (webXmlFile != null) {
-                setDescriptor(webXmlFile.getCanonicalPath());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        if (webXmlFile != null) {
+            setDescriptor(webXmlFile.getCanonicalPath());
         }
+
+        super.configure();
     }
     public void preConfigure() throws Exception{
         super.preConfigure();
         configureWebAppClasspath();
-        getMetaData().addDescriptorProcessor(new StandardDescriptorProcessor());
+//        getMetaData().addDescriptorProcessor(new StandardDescriptorProcessor());
 
     }
 

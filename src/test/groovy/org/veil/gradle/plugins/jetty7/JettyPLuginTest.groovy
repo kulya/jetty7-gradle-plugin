@@ -1,7 +1,7 @@
 package org.veil.gradle.plugins.jetty7
 
 import static org.hamcrest.CoreMatchers.instanceOf
-import static org.hamcrest.CoreMatchers.is
+
 import static org.junit.Assert.assertThat
 import static org.junit.Assert.assertTrue
 
@@ -19,7 +19,7 @@ class JettyPLuginTest {
 	
 	@Test
 	void shouldApplyWarPluginAndAddsConventionToProject() {
-		new JettyPlugin().apply(project)
+		new Jetty7Plugin().apply(project)
 		
 		assertTrue(project.getPlugins().hasPlugin(WarPlugin))
 		
@@ -28,26 +28,26 @@ class JettyPLuginTest {
 	
 	@Test
 	void shouldAddTasksToProject() {
-		new JettyPlugin().apply(project);
+		new Jetty7Plugin().apply(project);
 		
-		Task task = project.tasks[JettyPlugin.JETTY_RUN]
+		Task task = project.tasks[Jetty7Plugin.JETTY_RUN]
 		assertThat(task, instanceOf(JettyRun))
 		assertThat(task.httpPort, is(project.httpPort))
 		assertTrue(isTaskDependsOnOtherTask(task, JavaPlugin.CLASSES_TASK_NAME))
 		
-		task = project.tasks[JettyPlugin.JETTY_RUN_WAR]
+		task = project.tasks[Jetty7Plugin.JETTY_RUN_WAR]
 		assertThat(task, instanceOf(JettyRunWar))
 		assertThat(task.httpPort, is(project.httpPort))
 		assertTrue(isTaskDependsOnOtherTask(task, WarPlugin.WAR_TASK_NAME))
 		
-		task = project.tasks[JettyPlugin.JETTY_STOP]
+		task = project.tasks[Jetty7Plugin.JETTY_STOP]
 		assertThat(task, instanceOf(JettyStop))
 		assertThat(task.stopPort, is(project.stopPort))
 	}
 	
 	@Test
 	void shouldAddMappingToNewJettyTask() {
-		new JettyPlugin().apply(project)
+		new Jetty7Plugin().apply(project)
 		
 		Task task = project.tasks.add('customRun', JettyRun)
 		assertTrue(isTaskDependsOnOtherTask(task, JavaPlugin.CLASSES_TASK_NAME))
